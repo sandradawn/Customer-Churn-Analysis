@@ -1,47 +1,51 @@
-# 📊 Telco Customer Churn Advisor
+# ⚡ Telco Churn Intelligence Dashboard
 
 <div align="center">
   <img src="https://img.shields.io/badge/Python-3.12-blue.svg" alt="Python Version">
-  <img src="https://img.shields.io/badge/Streamlit-1.40+-FF4B4B.svg" alt="Streamlit">
-  <img src="https://img.shields.io/badge/Machine%20Learning-Scikit--Learn%20%7C%20XGBoost-orange" alt="ML Stack">
-  <img src="https://img.shields.io/badge/Explainability-SHAP-9cf" alt="SHAP">
+  <img src="https://img.shields.io/badge/Streamlit-1.58.0-FF4B4B.svg" alt="Streamlit">
+  <img src="https://img.shields.io/badge/Scikit--Learn-1.4+-F7931E.svg" alt="Scikit-Learn">
+  <img src="https://img.shields.io/badge/Plotly-5.22.0-3F4F75.svg" alt="Plotly">
+  <img src="https://img.shields.io/badge/Explainability-SHAP-9cf.svg" alt="SHAP">
 </div>
 
 <br>
 
-A professional, end-to-end Machine Learning web application designed to predict and analyze customer churn for telecommunication providers. Built with **Python**, **Scikit-Learn**, and **Streamlit**, this application features an intuitive UI and powerful Explainable AI (XAI) capabilities using **SHAP** to help business stakeholders understand the exact drivers behind customer attrition.
+An end-to-end Machine Learning web application designed to predict and analyze customer churn for telecommunication providers. Features a bespoke, SaaS-level real-time dashboard powered by **Explainable AI (SHAP)** and **Plotly** interactive analytics, built on top of an optimized **Scikit-Learn** preprocessing and classification pipeline.
 
 ---
 
-## 🎯 Features
+## 🌟 Key Features
 
-- **Real-Time Predictions**: Instantly calculate the probability of a customer cancelling their service based on their demographic, service usage, and financial data.
-- **Explainable AI (XAI)**: View dynamic SHAP waterfall plots for every prediction to understand *why* the model made its decision.
-- **Premium UI**: A responsive, beautifully designed Streamlit interface featuring glassmorphism elements, custom typography, and clear risk assessment cards.
-- **Robust Modeling**: Utilizes an optimized pipeline (handling data scaling and one-hot encoding) paired with class-imbalanced learning strategies.
+*   **Real-Time Churn Analysis**: No manual submission buttons. The dashboard processes profile updates and recalculates predictions instantly as user controls are modified.
+*   **Interactive Risk Assessment**: Displays a custom Plotly Gauge Speedometer that dynamically reflects stable, monitoring, or critical risk thresholds.
+*   **Explainable AI (XAI)**: Generates live SHAP waterfall plots for individual customer records to break down exactly how each attribute influences the risk score.
+*   **Key Churn Drivers**: Programmatically extracts and styles the top 3 attributes contributing to or reducing the customer's churn risk.
+*   **Ultra-Premium SaaS UI**: Styled using custom CSS with a clean glassmorphism layout, fluid hover transitions, and a clean typography hierarchy.
+*   **Hidden Branding**: Customized container settings completely hide the standard Streamlit header, footer, and deploy buttons to preserve a bespoke product aesthetic.
 
 ---
 
-## 🏗️ Project Structure
+## 🏗️ Project Architecture
 
 ```text
 customer-churn-analysis/
 ├── app/
-│   ├── app.py                  # Main Streamlit web application
-│   ├── utils.py                # Helper functions (Model loading & SHAP plotting)
+│   ├── app.py                  # Streamlit entry point and UI layout
+│   ├── utils.py                # Preprocessor/Model loading & SHAP plot generators
 │   └── assets/
-│       └── style.css           # Custom CSS for premium UI styling
+│       └── style.css           # SaaS-level styling rules & glassmorphism configurations
 ├── data/
-│   ├── telco_churn.csv         # Raw dataset (Kaggle Telco Customer Churn)
-│   └── split_data.pkl          # Pickled train/test splits
+│   ├── split_data.pkl          # Pickled training and validation datasets
+│   └── telco_churn.csv         # Raw customer churn dataset
 ├── models/
-│   ├── preprocessor.pkl        # Data preprocessing pipeline
-│   └── best_model.pkl          # Trained classification model pipeline
-├── notebooks/                  # Jupyter notebooks for EDA and model training
-├── .streamlit/
-│   └── config.toml             # Streamlit global theme configuration
-├── requirements.txt            # Minimal dependencies to run the app
-├── requirements-dev.txt        # Development dependencies (Jupyter, etc.)
+│   ├── best_model.pkl          # Trained Logistic Regression pipeline
+│   └── preprocessor.pkl        # Fitted scaling & one-hot encoding transformer
+├── notebooks/
+│   ├── 01_eda.ipynb            # Exploratory Data Analysis & visualizations
+│   ├── 02_preprocessing.ipynb  # Missing value handling & feature engineering
+│   ├── 03_model_training.ipynb # Hyperparameter tuning & model evaluation
+│   └── 04_explainability.ipynb # Global and local SHAP explanation tests
+├── requirements.txt            # App dependency list
 └── README.md                   # Project documentation
 ```
 
@@ -50,24 +54,22 @@ customer-churn-analysis/
 ## 🚀 Getting Started
 
 ### Prerequisites
+- **Python 3.10+** (Python 3.12 recommended)
+- Git
 
-Ensure you have **Python 3.10+** installed on your system.
-
-### 1. Clone the Repository
-
+### 1. Clone & Navigate
 ```bash
 git clone https://github.com/sandradawn/Customer-Churn-Analysis.git
 cd Customer-Churn-Analysis
 ```
 
-### 2. Set Up a Virtual Environment
+### 2. Configure Environment
+Set up a clean virtual environment to avoid package conflicts:
 
-It is highly recommended to use a virtual environment to manage dependencies:
-
-**Windows (PowerShell):**
-```bash
+**Windows:**
+```powershell
 python -m venv venv
-.\venv\Scripts\Activate.ps1
+.\venv\Scripts\activate
 ```
 
 **macOS/Linux:**
@@ -76,42 +78,37 @@ python3 -m venv venv
 source venv/bin/activate
 ```
 
-### 3. Install Dependencies
-
-Install the core packages required to run the web application:
-
+### 3. Install Requirements
 ```bash
 pip install -r requirements.txt
 ```
 
-*(Note: If you plan to run or modify the Jupyter notebooks in the `notebooks/` directory, install the development dependencies using `pip install -r requirements-dev.txt`)*
-
-### 4. Run the Application
-
-Launch the Streamlit dashboard locally:
-
+### 4. Launch the Dashboard
 ```bash
 streamlit run app/app.py
 ```
-
-The application will automatically open in your default web browser at `http://localhost:8501`.
+Your default browser will automatically open to `http://localhost:8501`.
 
 ---
 
-## 🧠 Machine Learning Insights
+## 🔬 Machine Learning Pipeline
 
-The underlying model is trained on the Kaggle Telco Customer Churn dataset. Key global drivers of churn identified during the modeling phase include:
-1. **Month-to-Month Contracts**: The strongest positive driver of churn. Customers without long-term commitments are highly volatile.
-2. **Short Tenure**: Customers with low tenure (<10 months) show significantly elevated churn risk.
-3. **Fiber Optic Service**: Surprisingly correlated with increased churn, often pointing to pricing sensitivity or competitor targeting.
-4. **Lack of Support Services**: Customers lacking Tech Support or Online Security packages churn at higher rates.
+### Data Preprocessing
+Categorical features are dynamically one-hot encoded while numerical features (`tenure`, `MonthlyCharges`, `TotalCharges`) are scaled. These steps are wrapped in a Scikit-Learn `ColumnTransformer` to prevent data leakage during training and inference.
+
+### Model Details
+The system utilizes a **Logistic Regression** classifier with balanced class weights (`class_weight='balanced'`) to mitigate the inherent class imbalance in customer retention datasets. It achieves optimized performance for both precision and recall, allowing business analysts to catch high-risk customers without excessive false alerts.
+
+### Explainability (SHAP)
+Instead of treating the ML pipeline as a black box, the dashboard integrates SHAP (SHapley Additive exPlanations) values to build trust:
+- **Baseline (E[f(X)])**: Represents the average model output across the training population.
+- **Attributions (Arrows)**: Positive values (red) show variables pushing the customer towards churning, while negative values (blue) show attributes encouraging retention.
+- **Individual Output (f(X))**: Represents the customer's raw log-odds score, which is sigmoid-transformed into the final churn percentage.
 
 ---
 
 ## 🤝 Contributing
+Contributions are welcome! Please open an issue or submit a pull request if you have enhancements or optimizations to share.
 
-Contributions, issues, and feature requests are welcome! Feel free to check the issues page if you want to contribute.
-
-## 📝 License
-
-This project is licensed under the MIT License.
+## 📄 License
+Licensed under the [MIT License](LICENSE).
