@@ -5,84 +5,123 @@ html, body, [class*="css"] {
     font-family: 'Inter', sans-serif;
 }
 
+/* Hide Streamlit Branding completely */
+#MainMenu {visibility: hidden;}
+footer {visibility: hidden;}
+header {visibility: hidden;}
+.stDeployButton {display:none;}
+
+/* Background gradient for a SaaS feel */
+.stApp {
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+}
+
 /* Typography */
 .main-title {
     font-family: 'Outfit', sans-serif;
-    font-size: 2.8rem;
+    font-size: 3rem;
     font-weight: 700;
-    background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+    background: linear-gradient(90deg, #1e40af, #6366f1);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.2rem;
+    text-align: center;
 }
 
 .sub-title {
     font-family: 'Inter', sans-serif;
-    font-size: 1.1rem;
-    color: #64748b;
-    margin-bottom: 2rem;
+    font-size: 1.15rem;
+    color: #475569;
+    margin-bottom: 2.5rem;
     font-weight: 400;
+    text-align: center;
 }
 
-/* Risk Cards */
-.risk-card {
-    padding: 1.8rem;
+/* Glassmorphism Cards */
+.glass-card {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
     border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+    margin-bottom: 1.5rem;
+}
+
+/* Results Dashboard Cards */
+.result-card {
+    border-radius: 16px;
+    padding: 2rem;
     box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
     margin-bottom: 1.5rem;
-    transition: transform 0.2s ease-in-out;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: fade-in 0.5s ease-out forwards;
 }
 
-.risk-card:hover {
-    transform: translateY(-2px);
+.result-card:hover {
+    transform: translateY(-4px);
+}
+
+@keyframes fade-in {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 .card-low {
-    background-color: #f0fdf4;
-    border-left: 6px solid #22c55e;
+    background: linear-gradient(145deg, #f0fdf4, #ffffff);
+    border-left: 6px solid #10b981;
 }
 
 .card-medium {
-    background-color: #fffbeb;
+    background: linear-gradient(145deg, #fffbeb, #ffffff);
     border-left: 6px solid #f59e0b;
 }
 
 .card-high {
-    background-color: #fef2f2;
+    background: linear-gradient(145deg, #fef2f2, #ffffff);
     border-left: 6px solid #ef4444;
 }
 
-/* Risk Values */
-.risk-title {
-    font-family: 'Outfit', sans-serif;
-    font-size: 1.2rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 0.2rem;
-}
-
-.risk-prob {
-    font-size: 3rem;
-    font-weight: 700;
-    margin: 0.2rem 0 1rem 0;
-    font-family: 'Outfit', sans-serif;
-}
-
-.risk-desc {
-    font-size: 0.95rem;
-    color: #475569;
-    line-height: 1.5;
-}
-
-/* Enhancing Streamlit defaults */
-.stButton>button {
-    border-radius: 8px;
+/* Key Drivers styling */
+.driver-badge {
+    display: inline-block;
+    padding: 0.35rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
     font-weight: 600;
-    padding: 0.5rem 1rem;
-    transition: all 0.2s;
+    margin: 0.25rem;
+}
+.driver-high { background-color: #fee2e2; color: #b91c1c; }
+.driver-low { background-color: #d1fae5; color: #047857; }
+
+/* Enhancing Streamlit Defaults */
+.stTabs [data-baseweb="tab-list"] {
+    gap: 2rem;
+    justify-content: center;
+}
+
+.stTabs [data-baseweb="tab"] {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    font-size: 1.1rem;
+    padding-bottom: 1rem;
+}
+
+.stButton>button {
+    background: linear-gradient(135deg, #3b82f6, #4f46e5);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    padding: 0.75rem 2rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
 }
 
 .stButton>button:hover {
-    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+    color: white;
 }
