@@ -14,6 +14,12 @@ An end-to-end Machine Learning web application designed to predict and analyze c
 
 ---
 
+<img width="1918" height="906" alt="image" src="https://github.com/user-attachments/assets/bc193779-4eae-42a7-a7de-f53319b8a9bd" />
+<img width="1915" height="912" alt="image" src="https://github.com/user-attachments/assets/be02e669-2cf8-460e-8e59-5596c4a3a6bd" />
+<img width="1917" height="735" alt="image" src="https://github.com/user-attachments/assets/9dfd5e2a-6eac-4beb-9554-0da41c129b90" />
+<img width="1915" height="917" alt="image" src="https://github.com/user-attachments/assets/1471ed00-0696-4d18-8df2-a77350b654cc" />
+
+
 ## 🌟 Key Features
 
 *   **Real-Time Churn Analysis**: No manual submission buttons. The dashboard processes profile updates and recalculates predictions instantly as user controls are modified.
