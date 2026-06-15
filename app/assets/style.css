@@ -38,15 +38,18 @@ header {visibility: hidden;}
 }
 
 /* Glassmorphism Cards */
-.glass-card {
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    border-radius: 16px;
-    padding: 2rem;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
-    margin-bottom: 1.5rem;
+.glass-card,
+div[data-element-key="risk_score_card"],
+div[data-element-key="prediction_statement_card"],
+div[data-element-key="shap_card"] {
+    background: rgba(255, 255, 255, 0.7) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.5) !important;
+    border-radius: 16px !important;
+    padding: 2rem !important;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05) !important;
+    margin-bottom: 1.5rem !important;
 }
 
 /* Results Dashboard Cards */

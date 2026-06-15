@@ -119,37 +119,30 @@ if model_loaded:
 
     st.markdown("<br>", unsafe_allow_html=True)
     
-    col_btn_1, col_btn_2, col_btn_3 = st.columns([1, 2, 1])
-    with col_btn_2:
-        predict_clicked = st.button("🚀 Analyze Churn Risk", type="primary", use_container_width=True)
-
-    if predict_clicked or 'prediction_done' in st.session_state:
-        st.session_state.prediction_done = True
+    st.markdown("---")
+    st.markdown("### 2. Real-Time Predictive Dashboard")
+    
+    try:
+        probs = best_model.predict_proba(input_df)[0]
+        churn_prob = probs[1] * 100
         
-        st.markdown("---")
-        st.markdown("### 2. Predictive Dashboard")
+        # Extract top drivers using explainer directly
+        preprocessor = best_model.named_steps['preprocessor']
+        input_preproc = preprocessor.transform(input_df)
+        input_preproc_df = pd.DataFrame(input_preproc, columns=clean_feature_names)
+        shap_values = explainer(input_preproc_df)
         
-        try:
-            probs = best_model.predict_proba(input_df)[0]
-            churn_prob = probs[1] * 100
-            
-            # Extract top drivers using explainer directly
-            preprocessor = best_model.named_steps['preprocessor']
-            input_preproc = preprocessor.transform(input_df)
-            input_preproc_df = pd.DataFrame(input_preproc, columns=clean_feature_names)
-            shap_values = explainer(input_preproc_df)
-            
-            # Map SHAP values
-            val_array = shap_values[0].values
-            feature_impacts = [(name, val) for name, val in zip(clean_feature_names, val_array)]
-            # Sort by absolute impact
-            feature_impacts.sort(key=lambda x: abs(x[1]), reverse=True)
-            top_drivers = feature_impacts[:3]
+        # Map SHAP values
+        val_array = shap_values[0].values
+        feature_impacts = [(name, val) for name, val in zip(clean_feature_names, val_array)]
+        # Sort by absolute impact
+        feature_impacts.sort(key=lambda x: abs(x[1]), reverse=True)
+        top_drivers = feature_impacts[:3]
 
-            col_res1, col_res2 = st.columns([1.2, 2], gap="large")
-            
-            with col_res1:
-                st.markdown("<div class='glass-card'>", unsafe_allow_html=True)
+        col_res1, col_res2 = st.columns([1.2, 2], gap="large")
+        
+        with col_res1:
+            with st.container(key="risk_score_card"):
                 st.markdown("#### Real-time Risk Score", unsafe_allow_html=True)
                 
                 # Plotly Gauge Chart
@@ -182,44 +175,46 @@ if model_loaded:
                     text_color = "#10b981"
                     status = "STABLE"
                     rec = "Continue standard engagement."
+                    pred_statement = "The customer is <b>NOT EXPECTED</b> to churn."
                 elif churn_prob <= 70.0:
                     text_color = "#d97706"
                     status = "MONITOR"
                     rec = "Offer proactive support or discounts."
+                    pred_statement = "The customer is <b>AT RISK</b> of churning."
                 else:
                     text_color = "#dc2626"
                     status = "CRITICAL"
                     rec = "Immediate retention action required!"
+                    pred_statement = "The customer <b>WILL LIKELY CHURN</b>."
                     
                 st.markdown(f"<h3 style='text-align: center; color: {text_color}; margin-top: -20px;'>STATUS: {status}</h3>", unsafe_allow_html=True)
                 st.markdown(f"<p style='text-align: center; font-weight: 500;'>{rec}</p>", unsafe_allow_html=True)
+            
+            with st.container(key="prediction_statement_card"):
+                st.markdown("#### Prediction Statement", unsafe_allow_html=True)
+                st.markdown(f"<div style='padding: 10px; border-left: 4px solid {text_color}; background-color: rgba(0,0,0,0.02); margin-bottom: 15px; font-size: 1.1rem;'>{pred_statement}</div>", unsafe_allow_html=True)
                 
-                st.markdown("</div>", unsafe_allow_html=True)
-                
-                st.markdown("<div class='glass-card'>", unsafe_allow_html=True)
                 st.markdown("#### Key Drivers", unsafe_allow_html=True)
                 st.markdown("<p style='font-size: 0.9rem; color: #64748b;'>The top factors influencing this specific customer's score:</p>", unsafe_allow_html=True)
                 for name, val in top_drivers:
                     direction = "Increased Risk" if val > 0 else "Decreased Risk"
                     badge_class = "driver-high" if val > 0 else "driver-low"
                     st.markdown(f"• <b>{name}</b> <span class='driver-badge {badge_class}'>{direction}</span>", unsafe_allow_html=True)
-                st.markdown("</div>", unsafe_allow_html=True)
 
-            with col_res2:
-                st.markdown("<div class='glass-card'>", unsafe_allow_html=True)
+        with col_res2:
+            with st.container(key="shap_card"):
                 st.markdown("#### Explainable AI: SHAP Waterfall", unsafe_allow_html=True)
-                st.markdown("<p style='font-size: 0.95rem; color: #475569;'>This visual breaks down how each feature pushed the risk score up from the baseline average.</p>", unsafe_allow_html=True)
+                st.markdown("<p style='font-size: 0.95rem; color: #475569;'>This visual updates in real-time. It breaks down how each feature pushed the risk score up or down from the baseline average.</p>", unsafe_allow_html=True)
                 
                 with st.spinner("Generating SHAP explanation..."):
                     try:
                         fig_shap = plot_shap_waterfall(best_model, explainer, clean_feature_names, input_df)
-                        st.pyplot(fig_shap)
+                        st.pyplot(fig_shap, clear_figure=True)
                     except Exception as shap_err:
                         st.error(f"Failed to render SHAP plot: {shap_err}")
-                st.markdown("</div>", unsafe_allow_html=True)
                 
-        except Exception as pred_err:
-            st.error(f"An error occurred during prediction: {pred_err}")
-            st.exception(pred_err)
+    except Exception as pred_err:
+        st.error(f"An error occurred during prediction: {pred_err}")
+        st.exception(pred_err)
 else:
     st.warning("Application is currently offline. Please run the model training step first to generate models and datasets.")

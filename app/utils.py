@@ -80,15 +80,21 @@ def plot_shap_waterfall(_best_model: Any, _explainer: Any, clean_feature_names: 
     # Compute SHAP values
     shap_values = _explainer(input_preproc_df)
     
-    # Create matplotlib figure
-    fig, ax = plt.subplots(figsize=(10, 6))
+    # Clear any active matplotlib plots to ensure a fresh context
+    plt.clf()
+    plt.close('all')
     
-    # For newer versions of SHAP, shap_values[0] is an Explanation object
-    # We display it using shap.plots.waterfall
+    # Create a fresh figure configuration
+    fig = plt.figure(figsize=(10, 6))
+    
+    # Draw the waterfall plot. SHAP draws on the active figure (which is fig)
     shap.plots.waterfall(shap_values[0], max_display=10, show=False)
+    
+    # Get current figure to make sure we capture everything SHAP drew
+    fig_active = plt.gcf()
     
     # Clean up aesthetics
     plt.title("SHAP Feature Attribution (Why this prediction?)", fontsize=14, pad=20, fontweight='bold')
     plt.tight_layout()
     
-    return fig
+    return fig_active
