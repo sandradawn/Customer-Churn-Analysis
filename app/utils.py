@@ -4,10 +4,11 @@ import pandas as pd
 import numpy as np
 import shap
 import streamlit as st
+from typing import Any, Tuple, List
 import matplotlib.pyplot as plt
 
 @st.cache_resource
-def load_model():
+def load_model() -> Any:
     """Loads the pre-trained best performing model pipeline from disk."""
     model_path = os.path.join("models", "best_model.pkl")
     if not os.path.exists(model_path):
@@ -15,10 +16,16 @@ def load_model():
     return joblib.load(model_path)
 
 @st.cache_resource
-def get_shap_explainer(_best_model):
+def get_shap_explainer(_best_model: Any) -> Tuple[Any, List[str]]:
     """
     Creates and caches a SHAP explainer based on the best model type.
     Uses the preprocessed training set as background.
+    
+    Args:
+        _best_model: The trained scikit-learn pipeline.
+        
+    Returns:
+        A tuple of (SHAP Explainer, List of clean feature names).
     """
     preprocessor = _best_model.named_steps['preprocessor']
     model = _best_model.named_steps['model']
@@ -51,9 +58,18 @@ def get_shap_explainer(_best_model):
         
     return explainer, clean_feature_names
 
-def plot_shap_waterfall(_best_model, _explainer, clean_feature_names, input_df):
+def plot_shap_waterfall(_best_model: Any, _explainer: Any, clean_feature_names: List[str], input_df: pd.DataFrame) -> plt.Figure:
     """
     Generates a SHAP waterfall plot for a single row prediction.
+    
+    Args:
+        _best_model: The trained scikit-learn pipeline.
+        _explainer: The initialized SHAP explainer.
+        clean_feature_names: List of formatted feature names.
+        input_df: DataFrame containing the customer inputs.
+        
+    Returns:
+        matplotlib.figure.Figure: The generated SHAP waterfall plot.
     """
     preprocessor = _best_model.named_steps['preprocessor']
     

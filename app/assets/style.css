@@ -1,0 +1,88 @@
+/* Global Styles */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+html, body, [class*="css"] {
+    font-family: 'Inter', sans-serif;
+}
+
+/* Typography */
+.main-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 2.8rem;
+    font-weight: 700;
+    background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.5rem;
+}
+
+.sub-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.1rem;
+    color: #64748b;
+    margin-bottom: 2rem;
+    font-weight: 400;
+}
+
+/* Risk Cards */
+.risk-card {
+    padding: 1.8rem;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+    margin-bottom: 1.5rem;
+    transition: transform 0.2s ease-in-out;
+}
+
+.risk-card:hover {
+    transform: translateY(-2px);
+}
+
+.card-low {
+    background-color: #f0fdf4;
+    border-left: 6px solid #22c55e;
+}
+
+.card-medium {
+    background-color: #fffbeb;
+    border-left: 6px solid #f59e0b;
+}
+
+.card-high {
+    background-color: #fef2f2;
+    border-left: 6px solid #ef4444;
+}
+
+/* Risk Values */
+.risk-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.2rem;
+}
+
+.risk-prob {
+    font-size: 3rem;
+    font-weight: 700;
+    margin: 0.2rem 0 1rem 0;
+    font-family: 'Outfit', sans-serif;
+}
+
+.risk-desc {
+    font-size: 0.95rem;
+    color: #475569;
+    line-height: 1.5;
+}
+
+/* Enhancing Streamlit defaults */
+.stButton>button {
+    border-radius: 8px;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    transition: all 0.2s;
+}
+
+.stButton>button:hover {
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+}
